@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Qurban UNP Padang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            color: #4a5568;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4fd1c7, #38b2ac);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #fc8181, #f56565);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .summary-card h4 {
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .summary-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .filter-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: rgba(72, 187, 120, 0.1);
+            border: 1px solid rgba(72, 187, 120, 0.3);
+            color: #2f855a;
+        }
+
+        .alert-info {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: #4c51bf;
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🕌 Berqurban Bersama UNP Padang</h1>
+            <p>Sistem Pengelolaan Qurban Universitas Negeri Padang</p>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showTab('registration')">📝 Pendaftaran Peserta</div>
+            <div class="nav-tab" onclick="showTab('deduction')">💰 Input Potongan Gaji</div>
+            <div class="nav-tab" onclick="showTab('reports')">📊 Laporan Peserta</div>
+        </div>
+
+        <!-- Tab Pendaftaran Peserta -->
+        <div id="registration" class="tab-content active">
+            <div class="form-section">
+                <h3>📋 Pendaftaran Peserta Qurban</h3>
+                <form id="registrationForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nip">NIP/NIK</label>
+                            <input type="text" id="nip" name="nip" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Nama Lengkap</label>
+                            <input type="text" id="nama" name="nama" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jabatan">Jabatan</label>
+                            <select id="jabatan" name="jabatan" required>
+                                <option value="">Pilih Jabatan</option>
+                                <option value="Dosen">Dosen</option>
+                                <option value="Tendik">Tenaga Kependidikan</option>
+                                <option value="Struktural">Pejabat Struktural</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fakultas">Fakultas/Unit</label>
+                            <select id="fakultas" name="fakultas" required>
+                                <option value="">Pilih Fakultas/Unit</option>
+                                <option value="FIP">Fakultas Ilmu Pendidikan</option>
+                                <option value="FBS">Fakultas Bahasa dan Seni</option>
+                                <option value="FMIPA">Fakultas Matematika dan IPA</option>
+                                <option value="FIS">Fakultas Ilmu Sosial</option>
+                                <option value="FT">Fakultas Teknik</option>
+                                <option value="FIK">Fakultas Ilmu Keolahragaan</option>
+                                <option value="FE">Fakultas Ekonomi</option>
+                                <option value="FPP">Fakultas Pariwisata dan Perhotelan</option>
+                                <option value="Rektorat">Rektorat</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="telepon">No. Telepon</label>
+                            <input type="tel" id="telepon" name="telepon" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="jenisHewan">Jenis Hewan Qurban</label>
+                            <select id="jenisHewan" name="jenisHewan" required onchange="updateHarga()">
+                                <option value="">Pilih Jenis Hewan</option>
+                                <option value="Kambing" data-harga="2500000">Kambing (Rp 2.500.000)</option>
+                                <option value="Sapi" data-harga="20000000">Sapi (Rp 20.000.000)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jenisPartisipasi">Jenis Partisipasi</label>
+                            <select id="jenisPartisipasi" name="jenisPartisipasi" required onchange="updateHarga()">
+                                <option value="">Pilih Jenis Partisipasi</option>
+                                <option value="Individu">Individu</option>
+                                <option value="Patungan">Patungan (1/7 sapi)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="totalBayar">Total Pembayaran</label>
+                            <input type="text" id="totalBayar" name="totalBayar" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="metodePembayaran">Metode Pembayaran</label>
+                            <select id="metodePembayaran" name="metodePembayaran" required>
+                                <option value="">Pilih Metode Pembayaran</option>
+                                <option value="Potongan Gaji">Potongan Gaji</option>
+                                <option value="Transfer Bank">Transfer Bank</option>
+                                <option value="Tunai">Tunai</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="catatan">Catatan Tambahan</label>
+                        <textarea id="catatan" name="catatan" rows="3" placeholder="Catatan khusus atau permintaan tambahan..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">💾 Daftar Peserta</button>
+                    <button type="reset" class="btn btn-secondary">🔄 Reset Form</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tab Input Potongan Gaji -->
+        <div id="deduction" class="tab-content">
+            <div class="form-section">
+                <h3>💰 Input Data Potongan Gaji</h3>
+                <div class="alert alert-info">
+                    <strong>Info:</strong> Fitur ini digunakan untuk mencatat potongan gaji pegawai yang telah terdaftar sebagai peserta qurban.
+                </div>
+                <form id="deductionForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nipPegawai">NIP Pegawai</label>
+                            <select id="nipPegawai" name="nipPegawai" required onchange="loadPegawaiData()">
+                                <option value="">Pilih NIP Pegawai</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="namaPegawai">Nama Pegawai</label>
+                            <input type="text" id="namaPegawai" name="namaPegawai" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="bulanPotongan">Bulan Potongan</label>
+                            <select id="bulanPotongan" name="bulanPotongan" required>
+                                <option value="">Pilih Bulan</option>
+                                <option value="Januari">Januari</option>
+                                <option value="Februari">Februari</option>
+                                <option value="Maret">Maret</option>
+                                <option value="April">April</option>
+                                <option value="Mei">Mei</option>
+                                <option value="Juni">Juni</option>
+                                <option value="Juli">Juli</option>
+                                <option value="Agustus">Agustus</option>
+                                <option value="September">September</option>
+                                <option value="Oktober">Oktober</option>
+                                <option value="November">November</option>
+                                <option value="Desember">Desember</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tahunPotongan">Tahun Potongan</label>
+                            <input type="number" id="tahunPotongan" name="tahunPotongan" value="2025" min="2025" max="2030" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nominalPotongan">Nominal Potongan (Rp)</label>
+                            <input type="number" id="nominalPotongan" name="nominalPotongan" required min="0" step="1000" placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="sisaTagihan">Sisa Tagihan (Rp)</label>
+                            <input type="text" id="sisaTagihan" name="sisaTagihan" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="statusPembayaran">Status Pembayaran</label>
+                            <select id="statusPembayaran" name="statusPembayaran" required>
+                                <option value="">Pilih Status</option>
+                                <option value="Belum Lunas">Belum Lunas</option>
+                                <option value="Lunas">Lunas</option>
+                                <option value="Cicilan">Cicilan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggalPotongan">Tanggal Potongan</label>
+                            <input type="date" id="tanggalPotongan" name="tanggalPotongan" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="keteranganPotongan">Keterangan</label>
+                        <textarea id="keteranganPotongan" name="keteranganPotongan" rows="3" placeholder="Keterangan tambahan untuk potongan gaji..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">💾 Simpan Potongan</button>
+                    <button type="reset" class="btn btn-secondary">🔄 Reset Form</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>🔍 Riwayat Potongan Gaji</h3>
+                <div class="filter-section">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="filterNIP">Filter NIP</label>
+                            <select id="filterNIP" onchange="filterDeductions()">
+                                <option value="">Semua NIP</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filterBulan">Filter Bulan</label>
+                            <select id="filterBulan" onchange="filterDeductions()">
+                                <option value="">Semua Bulan</option>
+                                <option value="Januari">Januari</option>
+                                <option value="Februari">Februari</option>
+                                <option value="Maret">Maret</option>
+                                <option value="April">April</option>
+                                <option value="Mei">Mei</option>
+                                <option value="Juni">Juni</option>
+                                <option value="Juli">Juli</option>
+                                <option value="Agustus">Agustus</option>
+                                <option value="September">September</option>
+                                <option value="Oktober">Oktober</option>
+                                <option value="November">November</option>
+                                <option value="Desember">Desember</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filterStatus">Filter Status</label>
+                            <select id="filterStatus" onchange="filterDeductions()">
+                                <option value="">Semua Status</option>
+                                <option value="Belum Lunas">Belum Lunas</option>
+                                <option value="Lunas">Lunas</option>
+                                <option value="Cicilan">Cicilan</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="deductionTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NIP</th>
+                                <th>Nama</th>
+                                <th>Bulan</th>
+                                <th>Tahun</th>
+                                <th>Nominal</th>
+                                <th>Sisa Tagihan</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deductionTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Laporan Peserta -->
+        <div id="reports" class="tab-content">
+            <div class="form-section">
+                <h3>📊 Laporan & Statistik Peserta</h3>
+                
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <h4>Total Peserta</h4>
+                        <div class="value" id="totalPeserta">0</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Total Hewan Qurban</h4>
+                        <div class="value" id="totalHewan">0</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Total Dana Terkumpul</h4>
+                        <div class="value" id="totalDana">Rp 0</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Lunas</h4>
+                        <div class="value" id="totalLunas">0</div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h4>Filter Laporan</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="filterFakultas">Fakultas/Unit</label>
+                            <select id="filterFakultas" onchange="filterReports()">
+                                <option value="">Semua Fakultas</option>
+                                <option value="FIP">Fakultas Ilmu Pendidikan</option>
+                                <option value="FBS">Fakultas Bahasa dan Seni</option>
+                                <option value="FMIPA">Fakultas Matematika dan IPA</option>
+                                <option value="FIS">Fakultas Ilmu Sosial</option>
+                                <option value="FT">Fakultas Teknik</option>
+                                <option value="FIK">Fakultas Ilmu Keolahragaan</option>
+                                <option value="FE">Fakultas Ekonomi</option>
+                                <option value="FPP">Fakultas Pariwisata dan Perhotelan</option>
+                                <option value="Rektorat">Rektorat</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filterJabatan">Jabatan</label>
+                            <select id="filterJabatan" onchange="filterReports()">
+                                <option value="">Semua Jabatan</option>
+                                <option value="Dosen">Dosen</option>
+                                <option value="Tendik">Tenaga Kependidikan</option>
+                                <option value="Struktural">Pejabat Struktural</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filterHewan">Jenis Hewan</label>
+                            <select id="filterHewan" onchange="filterReports()">
+                                <option value="">Semua Jenis</option>
+                                <option value="Kambing">Kambing</option>
+                                <option value="Sapi">Sapi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="exportToExcel()">📊 Export Excel</button>
+                    <button class="btn btn-secondary" onclick="printReport()">🖨️ Print Laporan</button>
+                </div>
+
+                <div class="table-container">
+                    <table id="reportTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NIP</th>
+                                <th>Nama</th>
+                                <th>Fakultas</th>
+                                <th>Jabatan</th>
+                                <th>Jenis Hewan</th>
+                                <th>Partisipasi</th>
+                                <th>Total Bayar</th>
+                                <th>Metode Pembayaran</th>
+                                <th>Status</th>
+                                <th>Telepon</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let pesertaData = [];
+        let potonganData = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            updateReports();
+            populateDropdowns();
+        });
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Update harga based on selection
+        function updateHarga() {
+            const jenisHewan = document.getElementById('jenisHewan');
+            const jenisPartisipasi = document.getElementById('jenisPartisipasi');
+            const totalBayar = document.getElementById('totalBayar');
+            
+            if (jenisHewan.value && jenisPartisipasi.value) {
+                const selectedOption = jenisHewan.options[jenisHewan.selectedIndex];
+                let harga = parseInt(selectedOption.dataset.harga) || 0;
+                
+                if (jenisPartisipasi.value === 'Patungan' && jenisHewan.value === 'Sapi') {
+                    harga = Math.floor(harga / 7);
+                }
+                
+                totalBayar.value = 'Rp ' + harga.toLocaleString('id-ID');
+            }
+        }
+
+        // Registration form submit
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const peserta = {};
+            
+            for (let [key, value] of formData.entries()) {
+                peserta[key] = value;
+            }
+            
+            // Add ID and timestamp
+            peserta.id = Date.now();
+            peserta.tanggalDaftar = new Date().toISOString().split('T')[0];
+            peserta.status = 'Terdaftar';
+            
+            pesertaData.push(peserta);
+            saveData();
+            updateReports();
+            populateDropdowns();
+            
+            alert('Peserta berhasil didaftarkan!');
+            this.reset();
+        });
+
+        // Deduction form submit
+        document.getElementById('deductionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const potongan = {};
+            
+            for (let [key, value] of formData.entries()) {
+                potongan[key] = value;
+            }
+            
+            potongan.id = Date.now();
+            potonganData.push(potongan);
+            
+            // Update status peserta if lunas
+            if (potongan.statusPembayaran === 'Lunas') {
+                const peserta = pesertaData.find(p => p.nip === potongan.nipPegawai);
+                if (peserta) {
+                    peserta.status = 'Lunas';
+                }
+            }
+            
+            saveData();
+            updateDeductionTable();
+            updateReports();
+            
+            alert('Data potongan gaji berhasil disimpan!');
+            this.reset();
+        });
+
+        // Load pegawai data for deduction form
+        function loadPegawaiData() {
+            const nipSelect = document.getElementById('nipPegawai');
+            const namaInput = document.getElementById('namaPegawai');
+            const sisaTagihan = document.getElementById('sisaTagihan');
+            
+            const selectedNIP = nipSelect.value;
+            const peserta = pesertaData.find(p => p.nip === selectedNIP);
+            
+            if (peserta) {
+                namaInput.value = peserta.nama;
+                
+                // Calculate remaining payment
+                const totalBayar = parseInt(peserta.totalBayar.replace(/[^\d]/g, '')) || 0;
+                const totalPotongan = potonganData
+                    .filter(p => p.nipPegawai === selectedNIP)
+                    .reduce((sum, p) => sum + parseInt(p.nominalPotongan || 0), 0);
+                
+                const sisa = totalBayar - totalPotongan;
+                sisaTagihan.value = 'Rp ' + Math.max(0, sisa).toLocaleString('id-ID');
+            } else {
+                namaInput.value = '';
+                sisaTagihan.value = '';
+            }
+        }
+
+        // Populate dropdowns
+        function populateDropdowns() {
+            const nipPegawaiSelect = document.getElementById('nipPegawai');
+            const filterNIPSelect = document.getElementById('filterNIP');
+            
+            // Clear existing options
+            nipPegawaiSelect.innerHTML = '<option value="">Pilih NIP Pegawai</option>';
+            filterNIPSelect.innerHTML = '<option value="">Semua NIP</option>';
+            
+            pesertaData.forEach(peserta => {
+                const option1 = new Option(`${peserta.nip} - ${peserta.nama}`, peserta.nip);
+                const option2 = new Option(`${peserta.nip} - ${peserta.nama}`, peserta.nip);
+                nipPegawaiSelect.add(option1);
+                filterNIPSelect.add(option2);
+            });
+        }
+
+        // Update deduction table
+        function updateDeductionTable() {
+            const tbody = document.getElementById('deductionTableBody');
+            tbody.innerHTML = '';
+            
+            potonganData.forEach((potongan, index) => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${potongan.nipPegawai}</td>
+                    <td>${potongan.namaPegawai}</td>
+                    <td>${potongan.bulanPotongan}</td>
+                    <td>${potongan.tahunPotongan}</td>
+                    <td>Rp ${parseInt(potongan.nominalPotongan || 0).toLocaleString('id-ID')}</td>
+                    <td>${potongan.sisaTagihan}</td>
+                    <td><span class="status-badge status-${potongan.statusPembayaran.toLowerCase().replace(' ', '-')}">${potongan.statusPembayaran}</span></td>
+                    <td>${potongan.tanggalPotongan}</td>
+                    <td>
+                        <button class="btn btn-sm" onclick="editPotongan(${potongan.id})">✏️</button>
+                        <button class="btn btn-danger btn-sm" onclick="deletePotongan(${potongan.id})">🗑️</button>
+                    </td>
+                `;
+            });
+        }
+
+        // Filter deductions
+        function filterDeductions() {
+            const nipFilter = document.getElementById('filterNIP').value;
+            const bulanFilter = document.getElementById('filterBulan').value;
+            const statusFilter = document.getElementById('filterStatus').value;
+            
+            const filteredData = potonganData.filter(potongan => {
+                return (!nipFilter || potongan.nipPegawai === nipFilter) &&
+                       (!bulanFilter || potongan.bulanPotongan === bulanFilter) &&
+                       (!statusFilter || potongan.statusPembayaran === statusFilter);
+            });
+            
+            const tbody = document.getElementById('deductionTableBody');
+            tbody.innerHTML = '';
+            
+            filteredData.forEach((potongan, index) => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${potongan.nipPegawai}</td>
+                    <td>${potongan.namaPegawai}</td>
+                    <td>${potongan.bulanPotongan}</td>
+                    <td>${potongan.tahunPotongan}</td>
+                    <td>Rp ${parseInt(potongan.nominalPotongan || 0).toLocaleString('id-ID')}</td>
+                    <td>${potongan.sisaTagihan}</td>
+                    <td><span class="status-badge status-${potongan.statusPembayaran.toLowerCase().replace(' ', '-')}">${potongan.statusPembayaran}</span></td>
+                    <td>${potongan.tanggalPotongan}</td>
+                    <td>
+                        <button class="btn btn-sm" onclick="editPotongan(${potongan.id})">✏️</button>
+                        <button class="btn btn-danger btn-sm" onclick="deletePotongan(${potongan.id})">🗑️</button>
+                    </td>
+                `;
+            });
+        }
+
+        // Update reports
+        function updateReports() {
+            // Update summary cards
+            document.getElementById('totalPeserta').textContent = pesertaData.length;
+            
+            const totalHewan = pesertaData.reduce((total, peserta) => {
+                return total + (peserta.jenisPartisipasi === 'Individu' ? 1 : 0.14); // 1/7 for patungan
+            }, 0);
+            document.getElementById('totalHewan').textContent = Math.ceil(totalHewan);
+            
+            const totalDana = pesertaData.reduce((total, peserta) => {
+                const bayar = parseInt(peserta.totalBayar?.replace(/[^\d]/g, '') || 0);
+                return total + bayar;
+            }, 0);
+            document.getElementById('totalDana').textContent = 'Rp ' + totalDana.toLocaleString('id-ID');
+            
+            const totalLunas = pesertaData.filter(p => p.status === 'Lunas').length;
+            document.getElementById('totalLunas').textContent = totalLunas;
+            
+            // Update report table
+            updateReportTable();
+        }
+
+        // Update report table
+        function updateReportTable() {
+            const tbody = document.getElementById('reportTableBody');
+            tbody.innerHTML = '';
+            
+            pesertaData.forEach((peserta, index) => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${peserta.nip}</td>
+                    <td>${peserta.nama}</td>
+                    <td>${peserta.fakultas}</td>
+                    <td>${peserta.jabatan}</td>
+                    <td>${peserta.jenisHewan}</td>
+                    <td>${peserta.jenisPartisipasi}</td>
+                    <td>${peserta.totalBayar}</td>
+                    <td>${peserta.metodePembayaran}</td>
+                    <td><span class="status-badge status-${peserta.status?.toLowerCase() || 'terdaftar'}">${peserta.status || 'Terdaftar'}</span></td>
+                    <td>${peserta.telepon}</td>
+                    <td>
+                        <button class="btn btn-sm" onclick="editPeserta(${peserta.id})">✏️</button>
+                        <button class="btn btn-danger btn-sm" onclick="deletePeserta(${peserta.id})">🗑️</button>
+                        <button class="btn btn-secondary btn-sm" onclick="viewDetail(${peserta.id})">👁️</button>
+                    </td>
+                `;
+            });
+        }
+
+        // Filter reports
+        function filterReports() {
+            const fakultasFilter = document.getElementById('filterFakultas').value;
+            const jabatanFilter = document.getElementById('filterJabatan').value;
+            const hewanFilter = document.getElementById('filterHewan').value;
+            
+            const filteredData = pesertaData.filter(peserta => {
+                return (!fakultasFilter || peserta.fakultas === fakultasFilter) &&
+                       (!jabatanFilter || peserta.jabatan === jabatanFilter) &&
+                       (!hewanFilter || peserta.jenisHewan === hewanFilter);
+            });
+            
+            const tbody = document.getElementById('reportTableBody');
+            tbody.innerHTML = '';
+            
+            filteredData.forEach((peserta, index) => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${peserta.nip}</td>
+                    <td>${peserta.nama}</td>
+                    <td>${peserta.fakultas}</td>
+                    <td>${peserta.jabatan}</td>
+                    <td>${peserta.jenisHewan}</td>
+                    <td>${peserta.jenisPartisipasi}</td>
+                    <td>${peserta.totalBayar}</td>
+                    <td>${peserta.metodePembayaran}</td>
+                    <td><span class="status-badge status-${peserta.status?.toLowerCase() || 'terdaftar'}">${peserta.status || 'Terdaftar'}</span></td>
+                    <td>${peserta.telepon}</td>
+                    <td>
+                        <button class="btn btn-sm" onclick="editPeserta(${peserta.id})">✏️</button>
+                        <button class="btn btn-danger btn-sm" onclick="deletePeserta(${peserta.id})">🗑️</button>
+                        <button class="btn btn-secondary btn-sm" onclick="viewDetail(${peserta.id})">👁️</button>
+                    </td>
+                `;
+            });
+        }
+
+        // CRUD Operations
+        function editPeserta(id) {
+            const peserta = pesertaData.find(p => p.id === id);
+            if (peserta) {
+                // Fill form with peserta data
+                Object.keys(peserta).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = peserta[key];
+                    }
+                });
+                
+                // Switch to registration tab
+                showTab('registration');
+                document.querySelector('[onclick="showTab(\'registration\')"]').click();
+            }
+        }
+
+        function deletePeserta(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus peserta ini?')) {
+                pesertaData = pesertaData.filter(p => p.id !== id);
+                saveData();
+                updateReports();
+                populateDropdowns();
+            }
+        }
+
+        function editPotongan(id) {
+            const potongan = potonganData.find(p => p.id === id);
+            if (potongan) {
+                Object.keys(potongan).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = potongan[key];
+                    }
+                });
+                
+                showTab('deduction');
+                document.querySelector('[onclick="showTab(\'deduction\')"]').click();
+            }
+        }
+
+        function deletePotongan(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data potongan ini?')) {
+                potonganData = potonganData.filter(p => p.id !== id);
+                saveData();
+                updateDeductionTable();
+                updateReports();
+            }
+        }
+
+        function viewDetail(id) {
+            const peserta = pesertaData.find(p => p.id === id);
+            if (peserta) {
+                const potonganPeserta = potonganData.filter(p => p.nipPegawai === peserta.nip);
+                
+                let detailHtml = `
+                    <div style="padding: 20px; max-width: 600px;">
+                        <h3>📋 Detail Peserta</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr><td><strong>NIP:</strong></td><td>${peserta.nip}</td></tr>
+                            <tr><td><strong>Nama:</strong></td><td>${peserta.nama}</td></tr>
+                            <tr><td><strong>Fakultas:</strong></td><td>${peserta.fakultas}</td></tr>
+                            <tr><td><strong>Jabatan:</strong></td><td>${peserta.jabatan}</td></tr>
+                            <tr><td><strong>Telepon:</strong></td><td>${peserta.telepon}</td></tr>
+                            <tr><td><strong>Email:</strong></td><td>${peserta.email || '-'}</td></tr>
+                            <tr><td><strong>Jenis Hewan:</strong></td><td>${peserta.jenisHewan}</td></tr>
+                            <tr><td><strong>Partisipasi:</strong></td><td>${peserta.jenisPartisipasi}</td></tr>
+                            <tr><td><strong>Total Bayar:</strong></td><td>${peserta.totalBayar}</td></tr>
+                            <tr><td><strong>Metode Pembayaran:</strong></td><td>${peserta.metodePembayaran}</td></tr>
+                            <tr><td><strong>Status:</strong></td><td>${peserta.status}</td></tr>
+                            <tr><td><strong>Tanggal Daftar:</strong></td><td>${peserta.tanggalDaftar}</td></tr>
+                        </table>
+                        
+                        <h4 style="margin-top: 20px;">💰 Riwayat Potongan Gaji</h4>
+                `;
+                
+                if (potonganPeserta.length > 0) {
+                    detailHtml += `<table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <thead>
+                            <tr style="background: #f0f0f0;">
+                                <th style="border: 1px solid #ddd; padding: 8px;">Bulan/Tahun</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Nominal</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Status</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                    
+                    potonganPeserta.forEach(potongan => {
+                        detailHtml += `
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${potongan.bulanPotongan} ${potongan.tahunPotongan}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">Rp ${parseInt(potongan.nominalPotongan).toLocaleString('id-ID')}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${potongan.statusPembayaran}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${potongan.tanggalPotongan}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    detailHtml += '</tbody></table>';
+                } else {
+                    detailHtml += '<p>Belum ada data potongan gaji.</p>';
+                }
+                
+                detailHtml += '</div>';
+                
+                const newWindow = window.open('', '_blank', 'width=800,height=600');
+                newWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Detail Peserta - ${peserta.nama}</title>
+                            <style>
+                                body { font-family: Arial, sans-serif; margin: 20px; }
+                                table { border-collapse: collapse; width: 100%; }
+                                td, th { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                                th { background-color: #f2f2f2; }
+                            </style>
+                        </head>
+                        <body>${detailHtml}</body>
+                    </html>
+                `);
+                newWindow.document.close();
+            }
+        }
+
+        // Export functions
+        function exportToExcel() {
+            const table = document.getElementById('reportTable');
+            const wb = XLSX.utils.table_to_book(table, {sheet: "Laporan Peserta"});
+            const filename = `Laporan_Qurban_UNP_${new Date().toISOString().split('T')[0]}.xlsx`;
+            
+            // Since we can't import XLSX, we'll create a CSV instead
+            let csv = 'No,NIP,Nama,Fakultas,Jabatan,Jenis Hewan,Partisipasi,Total Bayar,Metode Pembayaran,Status,Telepon\n';
+            
+            pesertaData.forEach((peserta, index) => {
+                csv += `${index + 1},"${peserta.nip}","${peserta.nama}","${peserta.fakultas}","${peserta.jabatan}","${peserta.jenisHewan}","${peserta.jenisPartisipasi}","${peserta.totalBayar}","${peserta.metodePembayaran}","${peserta.status || 'Terdaftar'}","${peserta.telepon}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Laporan_Qurban_UNP_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function printReport() {
+            const reportContent = document.getElementById('reports').cloneNode(true);
+            
+            // Remove filter section and action buttons
+            const filterSection = reportContent.querySelector('.filter-section');
+            if (filterSection) filterSection.remove();
+            
+            const actionButtons = reportContent.querySelectorAll('button');
+            actionButtons.forEach(btn => btn.remove());
+            
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Laporan Peserta Qurban UNP</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; }
+                            .header { text-align: center; margin-bottom: 30px; }
+                            table { border-collapse: collapse; width: 100%; font-size: 12px; }
+                            th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                            .summary-cards { display: flex; justify-content: space-around; margin-bottom: 20px; }
+                            .summary-card { text-align: center; border: 1px solid #ddd; padding: 15px; border-radius: 5px; }
+                            @media print { body { margin: 0; } }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <h2>🕌 Laporan Peserta Qurban</h2>
+                            <h3>Universitas Negeri Padang</h3>
+                            <p>Tanggal Cetak: ${new Date().toLocaleDateString('id-ID')}</p>
+                        </div>
+                        ${reportContent.innerHTML}
+                    </body>
+                </html>
+            `);
+            newWindow.document.close();
+            newWindow.print();
+        }
+
+        // Data persistence
+        function saveData() {
+            // Store data in variables (since localStorage is not available)
+            // In a real application, this would save to a database
+        }
+
+        function loadData() {
+            // Load data from storage
+            // In a real application, this would load from a database
+            
+            // Sample data for demonstration
+            if (pesertaData.length === 0) {
+                pesertaData = [
+                    {
+                        id: 1,
+                        nip: '198505152010121001',
+                        nama: 'Dr. Ahmad Suhendra, M.Pd',
+                        jabatan: 'Dosen',
+                        fakultas: 'FIP',
+                        telepon: '081234567890',
+                        email: 'ahmad.suhendra@unp.ac.id',
+                        jenisHewan: 'Sapi',
+                        jenisPartisipasi: 'Patungan',
+                        totalBayar: 'Rp 2.857.143',
+                        metodePembayaran: 'Potongan Gaji',
+                        tanggalDaftar: '2025-01-15',
+                        status: 'Terdaftar',
+                        catatan: ''
+                    },
+                    {
+                        id: 2,
+                        nip: '197803122005011002',
+                        nama: 'Prof. Dr. Siti Rahma, M.Si',
+                        jabatan: 'Dosen',
+                        fakultas: 'FMIPA',
+                        telepon: '081987654321',
+                        email: 'siti.rahma@unp.ac.id',
+                        jenisHewan: 'Kambing',
+                        jenisPartisipasi: 'Individu',
+                        totalBayar: 'Rp 2.500.000',
+                        metodePembayaran: 'Transfer Bank',
+                        tanggalDaftar: '2025-01-20',
+                        status: 'Lunas',
+                        catatan: 'Pembayaran lunas'
+                    }
+                ];
+            }
+        }
+
+        // Set today's date for deduction form
+        document.getElementById('tanggalPotongan').valueAsDate = new Date();
+    </script>
+
+    <style>
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-terdaftar {
+            background-color: #e6f3ff;
+            color: #0066cc;
+        }
+
+        .status-lunas {
+            background-color: #e6ffe6;
+            color: #009900;
+        }
+
+        .status-belum-lunas {
+            background-color: #ffe6e6;
+            color: #cc0000;
+        }
+
+        .status-cicilan {
+            background-color: #fff3e6;
+            color: #ff6600;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        td button {
+            margin: 2px;
+        }
+    </style>
+</body>
+</html>
